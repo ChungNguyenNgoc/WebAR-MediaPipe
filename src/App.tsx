@@ -48,6 +48,33 @@ function App() {
             drawingUtils.drawLandmarks(canvasCtx, [landmarks[0]], {
               color: "red",
             });
+          // const gradient = canvasCtx!.createLinearGradient(100, 100, 300, 300);
+          // gradient.addColorStop(0, "red");
+          // gradient.addColorStop(0.5, "green");
+          // gradient.addColorStop(1, "blue");
+
+          // canvasCtx!.fillStyle = gradient; // fill color
+          // canvasCtx!.strokeStyle = gradient; // stroke color
+          // canvasCtx!.lineWidth = 20; // stroke width
+
+          // // diagonal rectanges
+          // canvasCtx!.fillRect(0, 0, 100, 100);
+          // canvasCtx!.fillRect(50, 50, 100, 100);
+          // canvasCtx!.fillRect(100, 100, 100, 100);
+          // canvasCtx!.fillRect(150, 150, 100, 100);
+          // canvasCtx!.fillRect(200, 200, 100, 100);
+          // canvasCtx!.fillRect(250, 250, 100, 100);
+          // canvasCtx!.fillRect(300, 300, 100, 100);
+          // canvasCtx!.fillRect(350, 350, 100, 100);
+          // canvasCtx!.fillRect(400, 400, 100, 100);
+
+          // // side rectangles
+          // canvasCtx!.strokeRect(300, 100, 100, 100);
+          // canvasCtx!.fillRect(100, 300, 100, 100);
+
+          // // right corner rectangles
+          // canvasCtx!.fillRect(650, 50, 100, 100);
+          // canvasCtx!.strokeRect(650, 350, 100, 100);
         }
       }
       canvasCtx!.restore();
@@ -76,7 +103,7 @@ function App() {
 
   return (
     <div className="container">
-      <video className="input_video" />
+      <video className="input_video" style={{ display: "none" }} />
       <canvas className="output_canvas" width="1920px" height="1200px" />
     </div>
   );
