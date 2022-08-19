@@ -31,7 +31,7 @@ function App() {
       );
       if (results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
-          console.debug("detectedObject: ", detectedObject);
+          // console.debug("detectedObject: ", detectedObject);
           // Reformat keypoint information as landmarks, for easy drawing.
           const landmarks = detectedObject.keypoints.map(
             (x: { point2d: { x: number; y: number; depth: number } }) =>
