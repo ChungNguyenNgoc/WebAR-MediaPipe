@@ -31,9 +31,11 @@ function App() {
       );
       if (results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
+          console.debug("detectedObject: ", detectedObject);
           // Reformat keypoint information as landmarks, for easy drawing.
           const landmarks = detectedObject.keypoints.map(
-            (x: { point2d: any }) => x.point2d,
+            (x: { point2d: { x: number; y: number; depth: number } }) =>
+              x.point2d,
           );
           // Draw bounding box.
           canvasCtx &&
