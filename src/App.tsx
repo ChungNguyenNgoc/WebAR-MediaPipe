@@ -31,12 +31,15 @@ function App() {
       );
       if (results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
-          // console.debug("detectedObject: ", detectedObject);
           // Reformat keypoint information as landmarks, for easy drawing.
           const landmarks = detectedObject.keypoints.map(
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
+          console.debug("~detectedObject", detectedObject);
+          console.debug("~landmarks", landmarks);
+          console.debug("~landmarks[0]", landmarks[0]);
+
           // Draw bounding box.
           canvasCtx &&
             drawingUtils.drawConnectors(
@@ -49,6 +52,38 @@ function App() {
           canvasCtx &&
             drawingUtils.drawLandmarks(canvasCtx, [landmarks[0]], {
               color: "red",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[1]], {
+              color: "orange",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[2]], {
+              color: "yellow",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[3]], {
+              color: "green",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[4]], {
+              color: "gray",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[5]], {
+              color: "blue",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[6]], {
+              color: "pink",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[7]], {
+              color: "black",
+            });
+          canvasCtx &&
+            drawingUtils.drawLandmarks(canvasCtx, [landmarks[8]], {
+              color: "white",
             });
           // const gradient = canvasCtx!.createLinearGradient(100, 100, 300, 300);
           // gradient.addColorStop(0, "red");
@@ -87,10 +122,12 @@ function App() {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/objectron/${file}`;
       },
     });
+
     objectron.setOptions({
       modelName: "Cup",
       maxNumObjects: 2,
     });
+
     objectron.onResults(onResults);
 
     const camera = new Camera(videoElement, {
