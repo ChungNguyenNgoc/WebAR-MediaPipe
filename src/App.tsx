@@ -115,13 +115,11 @@ function App() {
 
   return (
     <div className="container">
-      <video className="input_video" />
+      <video className="input_video selfie" />
       <div className="canvas-container">
-        <canvas
-          className="output_canvas"
-          width="1920px"
-          height="1200px"
-        ></canvas>
+        <canvas className="output_canvas" width="1920px" height="1200px">
+          Nguyen Ngoc Bao Chung
+        </canvas>
       </div>
     </div>
   );
