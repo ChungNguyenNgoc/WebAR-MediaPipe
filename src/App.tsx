@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.scss";
 import { Camera } from "@mediapipe/camera_utils";
@@ -7,6 +7,8 @@ import drawingUtils from "@mediapipe/drawing_utils";
 import mpObjectron from "@mediapipe/objectron";
 
 function App() {
+  const [detection, setDetection] = useState<boolean>(false);
+
   useEffect(() => {
     const videoElement = document.getElementsByClassName(
       "input_video",
@@ -29,6 +31,13 @@ function App() {
         canvasElement.width,
         canvasElement.height,
       );
+
+      if (results.objectDetections) {
+        setDetection(true);
+      } else {
+        setDetection(false);
+      }
+
       if (results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
           // Reformat keypoint information as landmarks, for easy drawing.
@@ -36,9 +45,6 @@ function App() {
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
-
-          console.debug("detectedObject :", detectedObject);
-          console.debug("landmarks :", landmarks);
 
           // Draw bounding box.
           canvasCtx &&
@@ -122,7 +128,11 @@ function App() {
           width="1920px"
           height="1200px"
         ></canvas>
-        <h1 className="title">Nguyen Ngoc Bao Chung</h1>
+        {detection == true ? (
+          <h1 className="title">Nguyen Ngoc Bao Chung</h1>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
