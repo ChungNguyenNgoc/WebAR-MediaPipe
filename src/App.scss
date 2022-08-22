@@ -12,14 +12,25 @@
   }
 
   .canvas-container {
+    position: relative;
     .output_canvas {
       display: block;
-      position: relative;
       left: 0;
       top: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
+    }
+    .title {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      font-weight: 600;
+      color: rgb(252, 143, 0);
     }
   }
 }
