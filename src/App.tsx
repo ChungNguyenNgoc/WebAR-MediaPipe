@@ -36,6 +36,10 @@ function App() {
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
+
+          console.debug("detectedObject :", detectedObject);
+          console.debug("landmarks :", landmarks);
+
           // Draw bounding box.
           canvasCtx &&
             drawingUtils.drawConnectors(
