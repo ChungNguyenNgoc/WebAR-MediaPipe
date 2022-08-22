@@ -103,8 +103,8 @@ function App() {
       onFrame: async () => {
         await objectron.send({ image: videoElement });
       },
-      // width: 1920,
-      // height: 1200,
+      width: 1920,
+      height: 1200,
     });
     camera.start();
   }, []);
