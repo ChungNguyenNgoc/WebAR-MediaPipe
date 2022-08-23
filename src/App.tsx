@@ -105,6 +105,8 @@ function App() {
     objectron.setOptions({
       modelName: "Cup",
       maxNumObjects: 2,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5,
     });
 
     objectron.onResults(onResults);
