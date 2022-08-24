@@ -10,7 +10,7 @@ function App() {
   const [detection, setDetection] = useState<boolean>(false);
 
   useEffect(() => {
-    const videoElement = document.getElementsByClassName(
+    let videoElement = document.getElementsByClassName(
       "input_video",
     )[0] as HTMLVideoElement;
     const canvasElement = document.getElementsByClassName(
@@ -18,6 +18,29 @@ function App() {
     )[0] as HTMLCanvasElement;
     const canvasCtx: CanvasRenderingContext2D | null =
       canvasElement.getContext("2d");
+
+    function initVideo(video: HTMLVideoElement, w: number, h: number) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const constraints = {
+          video: { width: w, height: h, facingMode: "user" },
+        };
+
+        navigator.mediaDevices
+          .getUserMedia(constraints)
+          .then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+            videoElement = video;
+          })
+          .catch(function (error) {
+            console.debug("Unable to access the camera/webcam.", error);
+          });
+      } else {
+        console.debug("MediaDevices interface not available.");
+      }
+    }
+
+    // initVideo(videoElement, 1920, 1200);
 
     function onResults(results: {
       image: CanvasImageSource;
@@ -45,6 +68,9 @@ function App() {
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
+
+          console.debug("detectedObject: ", detectedObject);
+          console.debug("landmarks: ", landmarks);
 
           // Draw bounding box.
           canvasCtx &&
