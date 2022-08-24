@@ -149,7 +149,7 @@ function App() {
 
   return (
     <div className="container">
-      <video className="input_video selfie" />
+      <video className="input_video" />
       <div className="canvas-container">
         <canvas
           className="output_canvas"
