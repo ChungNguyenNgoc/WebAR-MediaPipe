@@ -13,8 +13,9 @@ function App() {
   const handleStart = (event: { touches: any; preventDefault: () => void }) => {
     event.preventDefault();
     console.debug("touchstart.");
-    clientX = event.touches[0].clientX;
-    clientY = event.touches[0].clientY;
+    clientX = event.touches[0].clientX / 1920;
+    clientY = event.touches[0].clientY / 1200;
+    console.debug("event: ", event);
     console.debug("clientX: ", clientX);
     console.debug("clientY: ", clientY);
   };
