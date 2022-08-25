@@ -6,11 +6,17 @@ import drawingUtils from "@mediapipe/drawing_utils";
 import mpObjectron from "@mediapipe/objectron";
 
 function App() {
+  let clientX;
+  let clientY;
   const [detection, setDetection] = useState<boolean>(false);
 
-  const handleStart = (event: { preventDefault: () => void }) => {
+  const handleStart = (event: { touches: any; preventDefault: () => void }) => {
     event.preventDefault();
     console.debug("touchstart.");
+    clientX = event.touches[0].clientX;
+    clientY = event.touches[0].clientY;
+    console.debug("clientX: ", clientX);
+    console.debug("clientY: ", clientY);
   };
 
   useEffect(() => {
@@ -51,6 +57,8 @@ function App() {
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
+
+          console.debug("landmarks: ", landmarks);
 
           // Draw bounding box.
           canvasCtx &&
