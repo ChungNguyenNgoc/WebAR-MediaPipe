@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.scss";
 import { Camera } from "@mediapipe/camera_utils";
 import { Objectron } from "@mediapipe/objectron";
