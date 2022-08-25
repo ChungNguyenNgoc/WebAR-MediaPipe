@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "./logo.svg";
 import "./App.scss";
 import { Camera } from "@mediapipe/camera_utils";
@@ -8,6 +8,11 @@ import mpObjectron from "@mediapipe/objectron";
 
 function App() {
   const [detection, setDetection] = useState<boolean>(false);
+
+  const handleStart = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    console.debug("touchstart.");
+  };
 
   useEffect(() => {
     let videoElement = document.getElementsByClassName(
@@ -19,28 +24,13 @@ function App() {
     const canvasCtx: CanvasRenderingContext2D | null =
       canvasElement.getContext("2d");
 
-    function initVideo(video: HTMLVideoElement, w: number, h: number) {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const constraints = {
-          video: { width: w, height: h, facingMode: "user" },
-        };
+    const startup = () => {
+      canvasElement.addEventListener("touchstart", handleStart);
+    };
 
-        navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then(function (stream) {
-            video.srcObject = stream;
-            video.play();
-            videoElement = video;
-          })
-          .catch(function (error) {
-            console.debug("Unable to access the camera/webcam.", error);
-          });
-      } else {
-        console.debug("MediaDevices interface not available.");
-      }
-    }
-
-    // initVideo(videoElement, 1920, 1200);
+    const removeStartup = () => {
+      canvasElement.removeEventListener("touchstart", handleStart);
+    };
 
     function onResults(results: {
       image: CanvasImageSource;
@@ -56,21 +46,12 @@ function App() {
       );
 
       if (results.objectDetections) {
-        setDetection(true);
-      } else {
-        setDetection(false);
-      }
-
-      if (results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
           // Reformat keypoint information as landmarks, for easy drawing.
           const landmarks = detectedObject.keypoints.map(
             (x: { point2d: { x: number; y: number; depth: number } }) =>
               x.point2d,
           );
-
-          console.debug("detectedObject: ", detectedObject);
-          console.debug("landmarks: ", landmarks);
 
           // Draw bounding box.
           canvasCtx &&
@@ -119,6 +100,14 @@ function App() {
             });
         }
       }
+
+      if (results.objectDetections) {
+        setDetection(true);
+        startup();
+      } else {
+        setDetection(false);
+        removeStartup();
+      }
       canvasCtx!.restore();
     }
 
@@ -152,6 +141,7 @@ function App() {
       <video className="input_video" />
       <div className="canvas-container">
         <canvas
+          id="canvas"
           className="output_canvas"
           width="1920px"
           height="1200px"
