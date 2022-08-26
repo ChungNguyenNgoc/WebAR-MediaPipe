@@ -11,13 +11,13 @@ function App() {
   const [detection, setDetection] = useState<boolean>(false);
   const [touchObjectron, setTouchObjectron] = useState<boolean>(false);
 
-  const handleStart = (event: { touches: any; preventDefault: () => void }) => {
+  const handleClientTouch = (event: {
+    touches: any;
+    preventDefault: () => void;
+  }) => {
     event.preventDefault();
-    console.debug("touchstart.");
     clientX = event.touches[0].clientX / 1920;
     clientY = event.touches[0].clientY / 1200;
-    console.debug("~clientX: ", clientX);
-    console.debug("~clientY: ", clientY);
   };
 
   useEffect(() => {
@@ -30,12 +30,12 @@ function App() {
     const canvasCtx: CanvasRenderingContext2D | null =
       canvasElement.getContext("2d");
 
-    const startup = () => {
-      canvasElement.addEventListener("touchstart", handleStart);
+    const clientTouch = () => {
+      canvasElement.addEventListener("touchstart", handleClientTouch);
     };
 
-    const removeStartup = () => {
-      canvasElement.removeEventListener("touchstart", handleStart);
+    const removeClientTouch = () => {
+      canvasElement.removeEventListener("touchstart", handleClientTouch);
     };
 
     function onResults(results: {
@@ -125,11 +125,13 @@ function App() {
 
       if (results.objectDetections) {
         setDetection(true);
-        startup();
+        clientTouch();
       } else {
         setDetection(false);
-        removeStartup();
+        removeClientTouch();
         setTouchObjectron(false);
+
+        // Set touchObjectron == false when detection == false
         clientX = 0;
         clientY = 0;
       }
