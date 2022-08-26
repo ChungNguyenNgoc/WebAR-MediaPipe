@@ -160,6 +160,8 @@ function App() {
     camera.start();
   }, []);
 
+  console.debug("~touchObjectron: ", touchObjectron);
+
   return (
     <div className="container">
       <video className="input_video" />
