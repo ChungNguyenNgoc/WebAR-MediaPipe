@@ -6,18 +6,19 @@ import drawingUtils from "@mediapipe/drawing_utils";
 import mpObjectron from "@mediapipe/objectron";
 
 function App() {
-  let clientX;
-  let clientY;
+  let clientX: number;
+  let clientY: number;
   const [detection, setDetection] = useState<boolean>(false);
+  const [touchObjectron, setTouchObjectron] = useState<boolean>(false);
 
   const handleStart = (event: { touches: any; preventDefault: () => void }) => {
     event.preventDefault();
+
     console.debug("touchstart.");
     clientX = event.touches[0].clientX / 1920;
     clientY = event.touches[0].clientY / 1200;
-    console.debug("event: ", event);
-    console.debug("clientX: ", clientX);
-    console.debug("clientY: ", clientY);
+    console.debug("~clientX: ", clientX);
+    console.debug("~clientY: ", clientY);
   };
 
   useEffect(() => {
@@ -59,8 +60,21 @@ function App() {
               x.point2d,
           );
 
-          console.debug("landmarks: ", landmarks);
+          // A landmarks[3]
+          // B landmarks[7]
+          // C landmarks[6]
+          // D landmarks[2]
 
+          if (
+            ((clientX < landmarks[3].x && clientX < landmarks[2].x) ||
+              (clientX > landmarks[7].x && clientX > landmarks[6].x)) &&
+            ((clientY < landmarks[6].y && clientY < landmarks[2].y) ||
+              (clientY > landmarks[3].y && clientY > landmarks[7].y))
+          ) {
+            setTouchObjectron(false);
+          } else {
+            setTouchObjectron(true);
+          }
           // Draw bounding box.
           canvasCtx &&
             drawingUtils.drawConnectors(
@@ -143,6 +157,8 @@ function App() {
     });
     camera.start();
   }, []);
+
+  console.debug("~touchObjectron: ", touchObjectron);
 
   return (
     <div className="container">
