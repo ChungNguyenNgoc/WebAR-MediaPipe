@@ -16,8 +16,9 @@ function App() {
     preventDefault: () => void;
   }) => {
     event.preventDefault();
-    clientX = event.touches[0].clientX / 1920;
-    clientY = event.touches[0].clientY / 1200;
+    // coordinates are normalized to [0.0, 1.0]
+    clientX = event.touches[0].clientX / window.screen.width;
+    clientY = event.touches[0].clientY / window.screen.height;
   };
 
   useEffect(() => {
@@ -162,8 +163,6 @@ function App() {
     });
     camera.start();
   }, []);
-
-  console.debug("~touchObjectron: ", touchObjectron);
 
   return (
     <div className="container">
