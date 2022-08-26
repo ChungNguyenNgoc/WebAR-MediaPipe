@@ -53,6 +53,8 @@ function App() {
       );
 
       if (results.objectDetections) {
+        setDetection(true);
+        clientTouch();
         for (const detectedObject of results.objectDetections) {
           // Reformat keypoint information as landmarks, for easy drawing.
           const landmarks = detectedObject.keypoints.map(
@@ -122,16 +124,10 @@ function App() {
               color: "white",
             });
         }
-      }
-
-      if (results.objectDetections) {
-        setDetection(true);
-        clientTouch();
       } else {
         setDetection(false);
         removeClientTouch();
         setTouchObjectron(false);
-
         // Set touchObjectron == false when detection == false
         clientX = 0;
         clientY = 0;
