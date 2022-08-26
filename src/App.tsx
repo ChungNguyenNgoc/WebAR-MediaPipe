@@ -6,14 +6,13 @@ import drawingUtils from "@mediapipe/drawing_utils";
 import mpObjectron from "@mediapipe/objectron";
 
 function App() {
-  let clientX: number;
-  let clientY: number;
+  let clientX: number = 0;
+  let clientY: number = 0;
   const [detection, setDetection] = useState<boolean>(false);
   const [touchObjectron, setTouchObjectron] = useState<boolean>(false);
 
   const handleStart = (event: { touches: any; preventDefault: () => void }) => {
     event.preventDefault();
-
     console.debug("touchstart.");
     clientX = event.touches[0].clientX / 1920;
     clientY = event.touches[0].clientY / 1200;
@@ -66,13 +65,14 @@ function App() {
           // D landmarks[2]
 
           if (
+            clientX != 0 &&
             ((clientX < landmarks[3].x && clientX < landmarks[2].x) ||
               (clientX > landmarks[7].x && clientX > landmarks[6].x)) &&
             ((clientY < landmarks[6].y && clientY < landmarks[2].y) ||
               (clientY > landmarks[3].y && clientY > landmarks[7].y))
           ) {
             setTouchObjectron(false);
-          } else {
+          } else if (clientX != 0) {
             setTouchObjectron(true);
           }
           // Draw bounding box.
@@ -129,6 +129,7 @@ function App() {
       } else {
         setDetection(false);
         removeStartup();
+        setTouchObjectron(false);
       }
       canvasCtx!.restore();
     }
