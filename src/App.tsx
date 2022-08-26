@@ -130,6 +130,8 @@ function App() {
         setDetection(false);
         removeStartup();
         setTouchObjectron(false);
+        clientX = 0;
+        clientY = 0;
       }
       canvasCtx!.restore();
     }
