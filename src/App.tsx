@@ -66,7 +66,7 @@ function App() {
           // B landmarks[7]
           // C landmarks[6]
           // D landmarks[2]
-
+          // A, B, C, D are the points surrounding the object to form a quadrilateral, respectively
           if (
             clientX != 0 &&
             ((clientX < landmarks[3].x && clientX < landmarks[2].x) ||
