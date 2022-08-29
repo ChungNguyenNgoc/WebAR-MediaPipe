@@ -6,6 +6,7 @@ import drawingUtils from "@mediapipe/drawing_utils";
 import mpObjectron from "@mediapipe/objectron";
 
 function App() {
+  // Call Z(clientX, clientY) the coordinates when the customer touches the screen
   let clientX: number = 0;
   let clientY: number = 0;
   const [detection, setDetection] = useState<boolean>(false);
