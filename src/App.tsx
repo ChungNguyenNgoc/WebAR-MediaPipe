@@ -72,8 +72,8 @@ function App() {
             clientX != 0 &&
             ((clientX < landmarks[3].x && clientX < landmarks[2].x) ||
               (clientX > landmarks[7].x && clientX > landmarks[6].x)) &&
-            ((clientY > landmarks[6].y && clientY > landmarks[2].y) ||
-              (clientY < landmarks[3].y && clientY < landmarks[7].y))
+            ((clientY < landmarks[6].y && clientY < landmarks[2].y) ||
+              (clientY > landmarks[3].y && clientY > landmarks[7].y))
           ) {
             setTouchObjectron(false);
           } else if (clientX != 0) {
